@@ -84,7 +84,6 @@ namespace Inventoria.Services
 
         private async Task<int> NextSequenceAsync(Guid inventoryId)
         {
-            // compute max from existing items (cheap enough with index and projection)
             var max = await _db.Items.Where(i => i.InventoryId == inventoryId)
                                      .Select(i => i.CustomId)
                                      .ToListAsync();
