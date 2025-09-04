@@ -1,0 +1,25 @@
+@model IEnumerable<Inventoria.Models.Inventory>
+@{
+    ViewData["Title"] = "Inventories";
+}
+<div class="d-flex justify-content-between mb-2">
+    <div class="btn-group">
+        <a class="btn btn-success" href="/Inventories/Create">New inventory</a>
+    </div>
+</div>
+<table class="table table-hover">
+  <thead>
+    <tr><th></th><th>Title</th><th>Category</th><th>Updated</th></tr>
+  </thead>
+  <tbody>
+  @foreach (var i in Model)
+  {
+    <tr onclick="location.href='/Inventories/Manage/@i.Id'">
+      <td>⍰</td>
+      <td>@i.Title</td>
+      <td>@i.Category</td>
+      <td>@i.UpdatedAt.ToLocalTime()</td>
+    </tr>
+  }
+  </tbody>
+</table>

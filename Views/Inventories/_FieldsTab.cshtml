@@ -1,0 +1,18 @@
+@model Inventoria.Models.Inventory
+<div class="mb-2">
+    <button class="btn btn-outline-primary btn-sm" onclick="addField('SingleLine')">+ Single line</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="addField('MultiLine')">+ Multi-line</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="addField('Numeric')">+ Numeric</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="addField('DocumentLink')">+ Document/Link</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="addField('Boolean')">+ True/false</button>
+</div>
+<table class="table table-sm" id="fields-table">
+  <thead><tr><th>#</th><th>Title</th><th>Type</th><th>Show in table</th></tr></thead>
+  <tbody>
+    @foreach (var f in Model.Fields.OrderBy(f=>f.DisplayOrder))
+    {
+      <tr><td>@f.DisplayOrder</td><td>@f.Title</td><td>@f.Type</td><td>@(f.ShowInTable?"✓":"")</td></tr>
+    }
+  </tbody>
+</table>
+<p class="text-muted">Drag-and-drop reordering and full editing can be added as enhancement.</p>

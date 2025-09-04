@@ -1,0 +1,14 @@
+@model Inventoria.Models.Item
+@{
+    ViewData["Title"] = "Edit Item";
+}
+<form method="post" action="/Items/Save">
+  <input type="hidden" name="Id" value="@Model.Id" />
+  <input type="hidden" name="InventoryId" value="@Model.InventoryId" />
+  <div class="mb-2">
+    <label class="form-label">Custom ID</label>
+    <input class="form-control" name="CustomId" value="@Model.CustomId" />
+    <small class="text-muted">Unique within this inventory. You can edit it if needed.</small>
+  </div>
+  <button class="btn btn-success">Save</button>
+</form>

@@ -1,0 +1,25 @@
+@model Inventoria.Models.Inventory
+@{
+    var items = ViewBag.Items as IEnumerable<Inventoria.Models.Item>;
+}
+<div class="toolbar mb-2">
+    <a class="btn btn-primary" href="/Items/Create?inventoryId=@Model.Id">+ New Item</a>
+</div>
+<table class="table table-hover">
+  <thead><tr><th>☐</th><th>ID</th>
+    @foreach (var f in Model.Fields.Where(f=>f.ShowInTable).OrderBy(f=>f.DisplayOrder))
+    {
+        <th>@f.Title</th>
+    }
+    <th>Created</th></tr></thead>
+  <tbody>
+    @foreach (var i in (items ?? new List<Inventoria.Models.Item>()))
+    {
+        <tr onclick="location.href='/Items/Edit/@i.Id'">
+            <td>☐</td>
+            <td>@i.CustomId</td>
+            <td>@i.CreatedAt.ToLocalTime()</td>
+        </tr>
+    }
+  </tbody>
+</table>

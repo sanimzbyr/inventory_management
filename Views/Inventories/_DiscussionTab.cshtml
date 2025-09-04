@@ -1,0 +1,11 @@
+@model Inventoria.Models.Inventory
+<div id="discussion">
+  <div id="posts"></div>
+  <div class="input-group mt-2">
+    <textarea id="msg" class="form-control" placeholder="Write a message (Markdown supported)"></textarea>
+    <button id="send" class="btn btn-primary">Send</button>
+  </div>
+</div>
+<script>
+  window.inventoryId = "@Model.Id";
+</script>

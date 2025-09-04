@@ -1,0 +1,21 @@
+@model Inventoria.Models.Inventory
+<div class="alert alert-secondary">
+  Build your ID format by adding elements, reordering them, and editing options. Example updates live.
+</div>
+<div id="id-builder" class="card p-3">
+  <div class="d-flex gap-2 mb-2" id="elements"></div>
+  <div>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('Fixed')">+ Fixed</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('RandomD6')">+ 6-digit random</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('RandomD9')">+ 9-digit random</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('Random20')">+ 20-bit hex</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('Guid')">+ GUID</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('DateTime')">+ Date/time</button>
+    <button class="btn btn-outline-primary btn-sm" onclick="idAdd('Sequence')">+ Sequence</button>
+  </div>
+  <div class="mt-3">
+    <strong>Example:</strong> <span id="example"></span>
+  </div>
+  <div class="mt-2"><button class="btn btn-success" onclick="idSave()">Save</button></div>
+</div>
+<script>window.inventoryId="@Model.Id";</script>

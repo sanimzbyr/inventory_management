@@ -1,0 +1,63 @@
+@model Inventoria.Models.Inventory
+@{
+    ViewData["Title"] = "Create New Inventory";
+}
+
+<div class="container mt-5">
+    <h2>Create New Inventory</h2>
+
+    <!-- Inventory General Settings -->
+    <form method="post" asp-action="Create">
+        <div class="mb-2">
+            <label class="form-label">Title</label>
+            <input class="form-control" name="Title" value="@Model.Title" required />
+        </div>
+
+        <div class="mb-2">
+            <label>Description (Markdown)</label>
+            <textarea class="form-control" name="DescriptionMd" rows="5">@Model.DescriptionMd</textarea>
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Category</label>
+            <select class="form-select" name="Category">
+                @foreach (var v in Enum.GetValues<Inventoria.Models.InventoryCategory>())
+                {
+                    <option value="@((int)v)" selected="@(Model.Category == v)">@v</option>
+                }
+            </select>
+        </div>
+
+        <!-- Public/Private Access Option -->
+        <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" name="IsPublic" @(Model.IsPublic ? "checked" : "") />
+            <label class="form-check-label">Public (all authenticated users can add items)</label>
+        </div>
+
+        <!-- Custom ID Tab -->
+        <h5>Custom Inventory Number</h5>
+        <div id="id-builder" class="card p-3">
+            <div class="d-flex gap-2 mb-2" id="elements"></div>
+            <div>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('Fixed')">+ Fixed</button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('RandomD6')">+ 6-digit random</button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('RandomD9')">+ 9-digit random</button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('Random20')">+ 20-bit hex</button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('Guid')">+ GUID</button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('DateTime')">+ Date/time</button>
+                <button class="btn btn-outline-primary btn-sm" type="button" onclick="idAdd('Sequence')">+ Sequence</button>
+            </div>
+            <div class="mt-3">
+                <strong>Example:</strong> <span id="example"></span>
+            </div>
+            <div class="mt-2"><button class="btn btn-success" type="button" onclick="idSave()">Save</button></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-4">Create Inventory</button>
+    </form>
+</div>
+
+<script>
+    window.inventoryId = "@Model.Id";
+</script>
