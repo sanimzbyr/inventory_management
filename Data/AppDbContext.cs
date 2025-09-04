@@ -23,7 +23,6 @@ namespace Inventoria.Data
         {
             base.OnModelCreating(b);
 
-            // existing keys/indexes...
             b.Entity<InventoryTag>().HasKey(x => new { x.InventoryId, x.TagId });
             b.Entity<InventoryAccess>().HasKey(x => new { x.InventoryId, x.UserId });
             b.Entity<ItemLike>().HasKey(x => new { x.ItemId, x.UserId });
@@ -32,7 +31,6 @@ namespace Inventoria.Data
             b.Entity<Inventory>().Property(i => i.RowVersion).IsRowVersion();
             b.Entity<Item>().Property(i => i.RowVersion).IsRowVersion();
 
-            // 🔧 Make the 1:1 explicit: PK of CustomIdSpec is also its FK to Inventory.Id
             b.Entity<CustomIdSpec>()
                 .HasKey(s => s.InventoryId);
 
