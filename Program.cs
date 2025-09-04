@@ -8,18 +8,14 @@ using Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ------------ Services ------------
-
-// PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Identity (local-dev friendly)
 builder.Services
     .AddDefaultIdentity<ApplicationUser>(options =>
     {
-        options.SignIn.RequireConfirmedAccount = false;    // turn ON email confirm later
-        // options.Password.RequireNonAlphanumeric = false; // optional dev relax
+        options.SignIn.RequireConfirmedAccount = false;   
+        // options.Password.RequireNonAlphanumeric = false;
     })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders()
@@ -33,7 +29,6 @@ builder.Services.ConfigureApplicationCookie(o =>
 
 builder.Services.AddAuthentication(); // base cookie scheme
 
-// OPTIONAL externals (only if secrets are present)
 var googleId = builder.Configuration["Authentication:Google:ClientId"];
 var googleSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 if (!string.IsNullOrWhiteSpace(googleId) && !string.IsNullOrWhiteSpace(googleSecret))
@@ -65,11 +60,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
-// ------------ Pipeline ------------
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseMigrationsEndPoint();   // surfaces DB & migration issues nicely
+    app.UseMigrationsEndPoint(); 
 }
 else
 {
@@ -81,17 +75,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthentication(); // MUST be before authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
-// SignalR hub
 app.MapHub<DiscussionHub>("/hubs/discussion");
 
-// MVC + Razor Pages
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // maps /Identity/Account/* (Login/Register, etc.)
+app.MapRazorPages();
 
 app.Run();
