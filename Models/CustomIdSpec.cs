@@ -7,16 +7,13 @@ namespace Inventoria.Models
     public class CustomIdSpec
     {
         [Key]
-        public Guid InventoryId { get; set; } // 1:1 relationship with Inventory
+        public Guid InventoryId { get; set; } 
         public Inventory? Inventory { get; set; }
 
-        // Ordered list of elements in JSON; each item has: type, text, format
         public string ElementsJson { get; set; } = "[]";
 
-        // Example of the generated ID based on elements
         public string? Example { get; set; }
 
-        // Helper property to deserialize ElementsJson into a list of IdElements
         [NotMapped]
         public List<IdElement> Elements
         {
@@ -24,7 +21,6 @@ namespace Inventoria.Models
             set => ElementsJson = JsonSerializer.Serialize(value);
         }
 
-        // Method to update the Example field based on the current Elements
         public void GenerateExample()
         {
             Example = string.Join("-", Elements.Select(e => e.Type switch
