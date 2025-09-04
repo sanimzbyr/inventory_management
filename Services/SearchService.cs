@@ -12,7 +12,6 @@ namespace Inventoria.Services
         public async Task<(IEnumerable<Inventory>, IEnumerable<Item>)> SearchAsync(string query)
         {
             query = query.Trim();
-            // Use simple full-text via PostgreSQL ILIKE + unaccent for brevity
             var inv = await _db.Inventories
                 .Where(i => EF.Functions.ILike(i.Title, $"%{query}%") ||
                             EF.Functions.ILike(i.DescriptionMd ?? "", $"%{query}%"))
